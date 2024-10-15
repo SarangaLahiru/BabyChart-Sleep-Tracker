@@ -154,7 +154,7 @@ function App() {
       {showModal && (
         <div className="modal-overlay fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 p-4">
           <div className="modal-content bg-white p-6 rounded-lg w-full sm:w-3/4 md:w-1/2">
-            <h2 className="text-xl font-semibold mb-4">Sleep Prediction Form</h2>
+            <h2 className="text-xl font-semibold mb-4">Sleep Tracker</h2>
             <form onSubmit={handleFormSubmit}>
               <div className="form-group mb-4">
                 <label className="block mb-2 text-lg">Activity Start Time (Hours 6-18):</label>
