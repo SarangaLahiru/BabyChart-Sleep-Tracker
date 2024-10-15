@@ -88,6 +88,64 @@ body {
   width: 50px;
   border-radius: 50%;
 }
+/* Toggle Switch Container */
+.toggle-switch {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 26px;
+}
+
+/* Hide the default checkbox */
+.toggle-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* The slider background */
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc; /* Initial background */
+  transition: 0.4s; /* Smooth transition */
+  border-radius: 50px; /* Rounded corners */
+}
+
+/* The circle inside the slider */
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 20px;
+  width: 20px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white; /* Circle color */
+  transition: 0.4s; /* Smooth transition */
+  border-radius: 50%; /* Make it circular */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Shadow for the circle */
+}
+
+/* On checked - move the circle */
+input:checked + .slider:before {
+  transform: translateX(24px); /* Move to the right when toggled */
+}
+
+/* Change background color when checked */
+input:checked + .slider {
+  background-color: #4caf50; /* Green background when checked */
+  box-shadow: 0 0 10px rgba(76, 175, 80, 0.4); /* Green glow effect */
+}
+
+/* Optional: Add a glow effect when hovered */
+.toggle-switch:hover .slider {
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Slight shadow when hovered */
+}
+
 
 .banner {
   width: 100%;
@@ -402,5 +460,62 @@ button:hover {
 
 .close-button:hover {
   background-color: #999;
+}
+/* Toggle Switch Container */
+.toggle-switch {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 26px;
+}
+
+/* Hide the default checkbox */
+.toggle-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* The slider background */
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc; /* Initial background */
+  transition: 0.4s; /* Smooth transition */
+  border-radius: 50px; /* Rounded corners */
+}
+
+/* The circle inside the slider */
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 20px;
+  width: 20px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white; /* Circle color */
+  transition: 0.4s; /* Smooth transition */
+  border-radius: 50%; /* Make it circular */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Shadow for the circle */
+}
+
+/* On checked - move the circle */
+input:checked + .slider:before {
+  transform: translateX(24px); /* Move to the right when toggled */
+}
+
+/* Change background color when checked */
+input:checked + .slider {
+  background-color: #4caf50; /* Green background when checked */
+  box-shadow: 0 0 10px rgba(76, 175, 80, 0.4); /* Green glow effect */
+}
+
+/* Optional: Add a glow effect when hovered */
+.toggle-switch:hover .slider {
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Slight shadow when hovered */
 }
 

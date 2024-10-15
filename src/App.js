@@ -1,30 +1,26 @@
-import axios from 'axios'; // Importing axios for API requests
+import axios from 'axios';
 import React, { useState } from 'react';
-import './App.css'; // Importing the CSS file for styles
-import alarmIcon from './images/alarm-icon.png'; // Alarm icon
-import sleepIcon from './images/bed-time-icon.png'; // Bed Time icon
-import chartImage from './images/charta.png'; // Weekly chart image
-import diaperIcon from './images/diaper-icon.png'; // Diaper icon
-import feedIcon from './images/feed-icon.png'; // Feed icon
-import goalIcon from './images/goal-icon.png'; // Goal icon
-import healthIcon from './images/health-icon.png'; // Health icon
-import logoIcon from './images/logo.png'; // Logo icon
-import profilePic from './images/profile-picture-placeholder.png'; // Profile picture
-import progressIcon from './images/progress-icon.png'; // Progress icon
-import sleepQualityIcon from './images/sleep-quality-icon.png'; // Sleep quality icon
-import wakeUpIcon from './images/wake-up-icon.png'; // Wake Up icon
+import { FaBaby, FaBed, FaChartBar, FaHeartbeat, FaUtensils } from 'react-icons/fa';
+import alarmIcon from './images/alarm-icon.png';
+import banner from './images/banner.png';
+import sleepIcon from './images/bed-time-icon.png';
+import chartImage from './images/charta.png';
+import goalIcon from './images/goal-icon.png';
+import profilePic from './images/profile-picture-placeholder.png';
+import sleepQualityIcon from './images/sleep-quality-icon.png';
+import wakeUpIcon from './images/wake-up-icon.png';
+import './index.css';
 
 function App() {
-  const [predictedSleepTime, setPredictedSleepTime] = useState(''); // State to hold the predicted sleep time
-  const [showModal, setShowModal] = useState(false); // State to control modal visibility
+  const [predictedSleepTime, setPredictedSleepTime] = useState('');
+  const [showModal, setShowModal] = useState(false);
   const [formData, setFormData] = useState({
     activity_start_time: '',
     prev_sleep_duration: '',
     time_since_last_nap: '',
     room_temp: ''
-  }); // State to hold form data
+  });
 
-  // Function to handle form input changes
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({
@@ -33,142 +29,135 @@ function App() {
     });
   };
 
-  // Function to handle form submission and fetch predicted sleep time
   const handleFormSubmit = (e) => {
-    e.preventDefault(); // Prevent default form submission behavior
-
-    // Fetch the prediction from the Flask API
+    e.preventDefault();
     axios.post('http://127.0.0.1:5000/predict', formData)
       .then(response => {
-        setPredictedSleepTime(response.data.predicted_sleep_start_time); // Set the predicted sleep time
-        setShowModal(false); // Hide the modal after submission
+        setPredictedSleepTime(response.data.predicted_sleep_start_time);
+        setShowModal(false);
       })
       .catch(error => {
         console.error('Error fetching the prediction:', error);
       });
   };
 
-  // Function to show the modal
   const handleSleepClick = () => {
-    setShowModal(true); // Show the modal when Sleep button is clicked
+    setShowModal(true);
   };
 
-  // Function to close the modal
   const closeModal = () => {
-    setShowModal(false); // Hide the modal
+    setShowModal(false);
   };
 
   return (
-    <div className="App">
-      <div className="sidebar">
-        <div className="logo-section">
-          <h2>BabyChart</h2>
-          <img src={logoIcon} alt="BabyChart Logo" />
+    <div className="App flex flex-col md:flex-row">
+      {/* Sidebar */}
+      <div className="sidebar bg-purple-700 text-white fixed bottom-0 w-full md:static md:w-1/4 p-4 md:p-6 flex justify-between md:flex-col">
+        <div className="logo-section md:mb-10 text-center md:text-left">
+          {/* <h2 className="text-xl md:text-3xl font-bold">BabyChart</h2> */}
+          {/* <img src={logoIcon} alt="BabyChart Logo" className="w-8 md:w-12 mx-auto md:mx-0 mt-2 md:mt-4" /> */}
         </div>
-        <div className="menu-item" onClick={handleSleepClick}>
-          <img src={sleepIcon} alt="Sleep Icon" /> Sleep
+        <div className="menu-item cursor-pointer flex-grow md:flex-grow-0" onClick={handleSleepClick}>
+          <FaBed className="w-6 h-6 md:w-8 md:h-8 inline-block" /> {/* Sleep Icon */}
         </div>
-        <div className="menu-item">
-          <img src={feedIcon} alt="Feed Icon" /> Feed
+        <div className="menu-item cursor-pointer flex-grow md:flex-grow-0">
+          <FaUtensils className="w-6 h-6 md:w-8 md:h-8 inline-block" /> {/* Feed Icon */}
         </div>
-        <div className="menu-item">
-          <img src={diaperIcon} alt="Diaper Icon" /> Diaper
+        <div className="menu-item cursor-pointer flex-grow md:flex-grow-0">
+          <FaBaby className="w-6 h-6 md:w-8 md:h-8 inline-block" /> {/* Diaper Icon */}
         </div>
-        <div className="menu-item">
-          <img src={healthIcon} alt="Health Icon" /> Health
+        <div className="menu-item cursor-pointer flex-grow md:flex-grow-0">
+          <FaHeartbeat className="w-6 h-6 md:w-8 md:h-8 inline-block" /> {/* Health Icon */}
         </div>
-        <div className="menu-item">
-          <img src={progressIcon} alt="Progress Icon" /> Progress
+        <div className="menu-item cursor-pointer flex-grow md:flex-grow-0">
+          <FaChartBar className="w-6 h-6 md:w-8 md:h-8 inline-block" /> {/* Progress Icon */}
         </div>
       </div>
 
-      <div className="main-content">
-        <div className="header">
-          <h1>Welcome Back, Mrs. Geetha!</h1>
-          <img src={profilePic} alt="Profile Picture" />
+      {/* Main Content */}
+      
+      <div className="main-content flex-1 p-4 sm:p-6 md:ml-24">
+        <div className="header flex justify-between items-center mb-6">
+          <h1 className="text-xl md:text-3xl font-bold">Welcome Back, Mrs. Geetha!</h1>
+          <img src={profilePic} alt="Profile Picture" className="w-12 h-12 sm:w-16 sm:h-16 rounded-full" />
         </div>
+        <div className="card m-1">
+            <img src={banner} alt="Bed Time Icon" className='h-[100px]' />
+            
+            
+          </div>
 
-        <div className="banner"></div>
-
-        <div className="card-container">
-          <div className="card">
-            <img src={sleepIcon} alt="Bed Time Icon" />
+        <div className="card-container grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+          <div className="card bg-white shadow-md rounded-lg p-4 flex justify-between items-center">
+            <img src={sleepIcon} alt="Bed Time Icon" className="w-8" />
             <div className="card-content">
-              <p>Bed Time</p>
-              <p>21:00</p>
+              <p className="text-lg font-semibold">Bed Time</p>
+              <p className="text-sm">21:00</p>
             </div>
-            <label className="toggle-switch">
-              <input type="checkbox" />
-              <span className="slider"></span>
-            </label>
+            <label class="relative inline-flex items-center cursor-pointer">
+  <input type="checkbox" class="sr-only peer" />
+  <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-purple-500 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-purple-600"></div>
+</label>
           </div>
-          <div className="card">
-            <img src={alarmIcon} alt="Alarm Icon" />
-            <div className="card-content">
-              <p>Alarm</p>
-              <p>16H and 18Min</p>
-            </div>
-            <label className="toggle-switch">
-              <input type="checkbox" />
-              <span className="slider"></span>
-            </label>
-          </div>
-          <div className="card">
-            <img src={wakeUpIcon} alt="Wake Up Icon" />
-            <div className="card-content">
-              <p>Wake Up</p>
-              <p>06:30</p>
-            </div>
-            <label className="toggle-switch">
-              <input type="checkbox" />
-              <span className="slider"></span>
-            </label>
-          </div>
-        </div>
 
-        {/* New section for predicted sleep time */}
-        {/* <div className="predicted-sleep-container">
-          {predictedSleepTime && (
-            <div className="predicted-sleep-card">
-              <h2>Predicted Next Sleep Time</h2>
-              <p>{predictedSleepTime} minutes from now</p>
+          <div className="card bg-white shadow-md rounded-lg p-4 flex justify-between items-center">
+            <img src={alarmIcon} alt="Alarm Icon" className="w-8" />
+            <div className="card-content">
+              <p className="text-lg font-semibold">Alarm</p>
+              <p className="text-sm">16H and 18Min</p>
             </div>
-          )}
-        </div> */}
-
-        <div className="quality-goal-container">
-          <div className="quality-goal-card">
-            <div className="info">
-              <img src={sleepQualityIcon} alt="Sleep Quality Icon" />
-              <p>Sleep Quality</p>
-            </div>
-            <div className="circular-value">06 hr</div>
+            <label class="relative inline-flex items-center cursor-pointer">
+  <input type="checkbox" class="sr-only peer" />
+  <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-purple-500 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-purple-600"></div>
+</label>
           </div>
-          <div className="quality-goal-card">
-            <div className="info">
-              <img src={goalIcon} alt="Goal Icon" />
-              <p>Goal</p>
+
+          <div className="card bg-white shadow-md rounded-lg p-4 flex justify-between items-center">
+            <img src={wakeUpIcon} alt="Wake Up Icon" className="w-8" />
+            <div className="card-content">
+              <p className="text-lg font-semibold">Wake Up</p>
+              <p className="text-sm">06:30</p>
             </div>
-            <div className="circular-value">{predictedSleepTime} minutes</div>
+            <label class="relative inline-flex items-center cursor-pointer">
+  <input type="checkbox" class="sr-only peer" />
+  <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-purple-500 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-purple-600"></div>
+</label>
           </div>
         </div>
 
-        <div className="weekly-overview">
-          <h2>Weekly Overview</h2>
-          <div className="chart">
-            <img src={chartImage} alt="Chart Overview" />
+        <div className="quality-goal-container mt-6 grid grid-cols-2 gap-4 sm:gap-2">
+          <div className="quality-goal-card bg-white shadow-md rounded-lg p-4 flex justify-between items-center">
+            <div className="info flex items-center">
+              <img src={sleepQualityIcon} alt="Sleep Quality Icon" className="w-[15px] mr-2" />
+              <p className="text-lg font-semibold">Quality</p>
+            </div>
+            <div className="circular-value text-[13px] font-bold">{(predictedSleepTime/2)*3}min</div>
+          </div>
+          <div className="quality-goal-card bg-white shadow-md rounded-lg p-4 flex justify-between items-center">
+            <div className="info flex items-center">
+              <img src={goalIcon} alt="Goal Icon" className="w-6 mr-2" />
+              <p className="text-lg font-semibold">Goal</p>
+            </div>
+            <div className="circular-value text-[13px] font-bold">{predictedSleepTime} min</div>
+          </div>
+        </div>
+
+        <div className="weekly-overview mt-6">
+          <h2 className="text-lg md:text-2xl font-semibold">Weekly Overview</h2>
+          <div className="chart mt-4">
+            <img src={chartImage} alt="Chart Overview" className="w-full" />
           </div>
         </div>
       </div>
 
       {/* Modal for sleep form */}
       {showModal && (
-        <div className="modal-overlay">
-          <div className="modal-content">
-            <h2>Sleep Prediction Form</h2>
+        <div className="modal-overlay fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 p-4">
+          <div className="modal-content bg-white p-6 rounded-lg w-full sm:w-3/4 md:w-1/2">
+            <h2 className="text-xl font-semibold mb-4">Sleep Prediction Form</h2>
             <form onSubmit={handleFormSubmit}>
-              <div className="form-group">
-                <label>Activity Start Time (Hours 6-18):</label>
+              <div className="form-group mb-4">
+                <label className="block mb-2 text-lg">Activity Start Time (Hours 6-18):</label>
                 <input
                   type="number"
                   name="activity_start_time"
@@ -177,10 +166,11 @@ function App() {
                   min="6"
                   max="18"
                   required
+                  className="w-full p-2 border border-gray-300 rounded-md"
                 />
               </div>
-              <div className="form-group">
-                <label>Previous Sleep Duration (Minutes):</label>
+              <div className="form-group mb-4">
+                <label className="block mb-2 text-lg">Previous Sleep Duration (Minutes):</label>
                 <input
                   type="number"
                   name="prev_sleep_duration"
@@ -189,10 +179,11 @@ function App() {
                   min="30"
                   max="120"
                   required
+                  className="w-full p-2 border border-gray-300 rounded-md"
                 />
               </div>
-              <div className="form-group">
-                <label>Time Since Last Nap (Minutes):</label>
+              <div className="form-group mb-4">
+                <label className="block mb-2 text-lg">Time Since Last Nap (Minutes):</label>
                 <input
                   type="number"
                   name="time_since_last_nap"
@@ -201,10 +192,11 @@ function App() {
                   min="60"
                   max="300"
                   required
+                  className="w-full p-2 border border-gray-300 rounded-md"
                 />
               </div>
-              <div className="form-group">
-                <label>Room Temperature (Celsius 20-26):</label>
+              <div className="form-group mb-4">
+                <label className="block mb-2 text-lg">Room Temperature (Celsius 20-26):</label>
                 <input
                   type="number"
                   name="room_temp"
@@ -213,10 +205,13 @@ function App() {
                   min="20"
                   max="26"
                   required
+                  className="w-full p-2 border border-gray-300 rounded-md"
                 />
               </div>
-              <button type="submit">Predict Sleep Time</button>
-              <button type="button" className="close-button" onClick={closeModal}>Close</button>
+              <div className="flex justify-end space-x-4">
+                <button type="submit" className="bg-purple-600 text-white px-4 py-2 rounded-md">Predict Sleep Time</button>
+                <button type="button" className="bg-gray-400 text-white px-4 py-2 rounded-md" onClick={closeModal}>Close</button>
+              </div>
             </form>
           </div>
         </div>
